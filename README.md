@@ -1,7 +1,8 @@
 ##  Nft-Project
 
-    A program that converts csv files into generated CH-007 compatible json format , it also calculates the SHA256 of all json files created and the results are added
-    as a coulumn in a new csv file 
+    A program that converts csv files into generated CH-007 compatible json format ,
+    it also calculates the SHA256 of all json files created and the results are added
+    as a column in a new csv file 
 
 
 ##        Steps on How to Use This Script
@@ -11,11 +12,11 @@ i . Make sure you have python installed on your system
     
 ii. Clone this github repo 
 
-  `git clone https://github.com/timmySpark/nft-project.git`
+  git clone https://github.com/timmySpark/nft-project.git
   
 iii. Navigate to the folder already cloned
 
-     `cd nft-project`
+     cd nft-project
      
 iv.  Run the Script 
 
