@@ -3,12 +3,13 @@ import csv
 import json
 import hashlib
 
-# collect Input for csv and json files
+# collect Input for csv files
 
 csvinput = input('Enter csv file path : ').strip()
 
 def welcome():
     print('Welcome to Nft-Projects')
+    
     # Check if file is a csv file
 
     with open(csvinput) as file:
@@ -24,7 +25,7 @@ def welcome():
                 pass
 
 
-# func split_attrib: to split the attributes in the csv file
+# func split_attrib: to split the attributes in the csv file and make it a ch-007 json format
 
 def split_attrib(attr):
     i = 0
@@ -42,7 +43,7 @@ def split_attrib(attr):
     return attrs
 
 
-# func(hashedkey): creates hash keys for each json file
+# func(hashedkey): creates SHA256 keys for a json file
 
 def hashedkey(filename):
     hashvalue = hashlib.sha256(filename.encode())
@@ -50,7 +51,7 @@ def hashedkey(filename):
 
 
 # func(make_record): create CH-0007 Json Format
-#  key error because i didn't use small(a)
+
 def make_record(row):
     return {
         'format': 'CHIP-0007',
@@ -61,7 +62,7 @@ def make_record(row):
         'series_number': int(row['Series Number']),
         'series_total': 420,
         'attributes': [
-            {'gender': row['Gender']},
+            {'trait_type':'gender', 'value':row['Gender']},
             split_attrib(row['attributes'])
             ],
         'collection': {'name': 'Zuri NFT Tickets for Free Lunch',
@@ -71,7 +72,6 @@ def make_record(row):
                        }]},
         }
 
-    print('CH-007 format successfully created')
 
 ''' 
     /* This function does the following :-
@@ -93,7 +93,6 @@ def run(inputfile, outputfile):
             csv_writer = csv.DictWriter(write_csv, fields)
             csv_writer.writeheader()
             lcount = 0
-            counter = 0
             team = ''
 
             for row in reader:
