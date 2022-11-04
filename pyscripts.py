@@ -61,10 +61,7 @@ def make_record(row):
         'sensitive_content': False,
         'series_number': int(row['Series Number']),
         'series_total': 420,
-        'attributes': [
-            {'trait_type':'gender', 'value':row['Gender']},
-            split_attrib(row['attributes'])
-            ],
+        'attributes':split_attrib(row['attributes']),       
         'collection': {'name': 'Zuri NFT Tickets for Free Lunch',
                        'id': 'b774f676-c1d5-422e-beed-00ef5510c64d',
                        'attributes': [{'type': 'description',
@@ -74,8 +71,8 @@ def make_record(row):
 
 
 ''' 
-    /* This function does the following :-
-    /* Create a folder 'jsonfiles' if file does not exist
+    /* The function below does the following tasks :-
+    /* Create a folder 'jsonfiles' if folder does not exist
     /* Read csv file collected as input 
     /* Create json files from each row in the csv
     /* Create a new csv file with jsonfile hashedkey added as a new column
@@ -99,7 +96,6 @@ def run(inputfile, outputfile):
                 dump = make_record(row)
                 filename = 'jsonfiles/' + row['Filename'] + '.json'
                 newline = hashedkey(filename)
-                dump['Hash'] = newline
                 row['HASH_SHA256'] = str(newline)
 
                 # Check for team name above and set value of team to new row 'team name'  column
@@ -110,7 +106,7 @@ def run(inputfile, outputfile):
                 if row['TEAM NAMES'].strip() == '':
                     row['TEAM NAMES'] = team
 
-                dump['minting_tool'] = team.capitalize()
+                dump['minting_tool'] = team
 
                 out = json.dumps(dump, indent=4)
                 jsonoutput = open(filename, 'w')
