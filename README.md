@@ -1,4 +1,4 @@
-##  Nft-Project
+##  Csv-Converter
 
 A program that converts csv files into generated CH-007 compatible json format ,  it also calculates the SHA256 of all json files created and the results are added as a column in a new csv file 
 
