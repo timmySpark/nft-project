@@ -20,9 +20,9 @@ iv.  Run the Script
 
      python pyscripts.py
     
-v. A folder is created in the projects were all the json files created are stored
+v. A folder `jsonfiles` is created in the `nft-project folder` where all the json files created are stored
 
-vi. A new csvfile is created 'filename.output.csv' where all rows are writted with an extra column containing the SHA256 of the generated json files
+vi. A new csvfile is created `filename.output.csv`(filename is the name of the csv file collected) where all rows are writted with an extra column containing the SHA256 of the generated json files
     
 
 
