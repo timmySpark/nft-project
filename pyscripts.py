@@ -5,7 +5,7 @@ import hashlib
 
 # collect Input for csv and json files
 
-csvinput = str(input('Enter csv file path : '))
+csvinput = input('Enter csv file path : ').strip()
 
 def welcome():
     print('Welcome to Nft-Projects')
@@ -29,10 +29,16 @@ def welcome():
 def split_attrib(attr):
     i = 0
     attrs = []
-    new_attr = attr.split(';')
+    new_attr = attr.split(';') 
     for val in new_attr:
-        splited = val.split(':')
-        attrs.append({'trait_type': splited[0], 'value': splited[0]})
+        split = val.split(':')
+        if len(split)==1:
+            attrs.append({'trait_type': split[0],'value':''})
+        elif len(split)==0:
+            continue
+        else:    
+            attrs.append({'trait_type': split[0], 'value': split[1]})
+        
     return attrs
 
 
@@ -44,7 +50,7 @@ def hashedkey(filename):
 
 
 # func(make_record): create CH-0007 Json Format
-
+#  key error because i didn't use small(a)
 def make_record(row):
     return {
         'format': 'CHIP-0007',
@@ -54,8 +60,10 @@ def make_record(row):
         'sensitive_content': False,
         'series_number': int(row['Series Number']),
         'series_total': 420,
-        'gender': row['Gender'],
-        'attributes': [split_attrib(row['attributes'])],
+        'attributes': [
+            {'gender': row['Gender']},
+            split_attrib(row['attributes'])
+            ],
         'collection': {'name': 'Zuri NFT Tickets for Free Lunch',
                        'id': 'b774f676-c1d5-422e-beed-00ef5510c64d',
                        'attributes': [{'type': 'description',
@@ -85,21 +93,35 @@ def run(inputfile, outputfile):
             csv_writer = csv.DictWriter(write_csv, fields)
             csv_writer.writeheader()
             lcount = 0
+            counter = 0
+            team = ''
 
             for row in reader:
                 dump = make_record(row)
                 filename = 'jsonfiles/' + row['Filename'] + '.json'
                 newline = hashedkey(filename)
                 dump['Hash'] = newline
+                row['HASH_SHA256'] = str(newline)
+
+                # check if Team name is above and 
+                # make the other teamname of the other row
+                  
+                if row['TEAM NAMES'].strip():
+                    team = row['TEAM NAMES']
+
+                if row['TEAM NAMES'].strip() == '':
+                    row['TEAM NAMES'] = team
+
+                dump['minting_tool'] = team
                 out = json.dumps(dump, indent=4)
                 jsonoutput = open(filename, 'w')
                 jsonoutput.write(out)
                 lcount += 1
                 jsonoutput.close()
-                row['HASH_SHA256'] = str(newline)
                 csv_writer.writerow(row)
 
     print('Operation completed Succesfully')
+
 
 
 if __name__ == '__main__':
