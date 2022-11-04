@@ -103,16 +103,16 @@ def run(inputfile, outputfile):
                 dump['Hash'] = newline
                 row['HASH_SHA256'] = str(newline)
 
-                # check if Team name is above and 
-                # make the other teamname of the other row
-                  
+                # Check for team name above and set value of team to new row 'team name'  column
+                   
                 if row['TEAM NAMES'].strip():
-                    team = row['TEAM NAMES']
+                    team= row['TEAM NAMES']
 
                 if row['TEAM NAMES'].strip() == '':
                     row['TEAM NAMES'] = team
 
-                dump['minting_tool'] = team
+                dump['minting_tool'] = team.capitalize()
+
                 out = json.dumps(dump, indent=4)
                 jsonoutput = open(filename, 'w')
                 jsonoutput.write(out)
